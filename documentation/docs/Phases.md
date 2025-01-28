@@ -1,4 +1,4 @@
-# Linear Algebra Library Development Roadmap
+# Development Phases
 
 ## Phase 1: Core Linear Algebra Features
 
