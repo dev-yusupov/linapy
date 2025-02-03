@@ -1,6 +1,11 @@
 #include "Array.hpp"
 
 template <typename T>
+Array<T>::Array() {
+    // Default constructor
+}
+
+template <typename T>
 Array<T>::Array(const std::vector<T>& data) : data(data) {
     /*
     Constructor that initializes the array with the given data.
@@ -82,4 +87,14 @@ void Array<T>::display() const {
         std::cout << elem << " ";
     }
     std::cout << std::endl;
+}
+
+template <typename T>
+std::vector<T>& Array<T>::getData() {
+    return data;
+}
+
+template <typename T>
+const std::vector<T>& Array<T>::getData() const {
+    return data;
 }

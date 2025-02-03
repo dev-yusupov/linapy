@@ -7,8 +7,8 @@
 #include <stdexcept>
 
 template <typename T>
-
-class Array {
+class Array 
+{
 
 /*
     Array class template that wraps around a std::vector<T> and provides a subscript operator to access elements.
@@ -31,10 +31,15 @@ class Array {
         arr.display(); // Output: 1 2 3 4 5
 */
 
+protected:
+    std::vector<T>& getData();
+    const std::vector<T>& getData() const;
+
 private:
     std::vector<T> data;
     
 public:
+    Array();
     Array(const std::vector<T>& data);
 
     size_t size() const;
