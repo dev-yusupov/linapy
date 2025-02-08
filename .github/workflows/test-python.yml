@@ -1,4 +1,4 @@
-name: Unit tests for Python based features
+name: CI for Python based features
 
 on:
   push:

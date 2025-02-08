@@ -1,0 +1,38 @@
+name: CI for C++ based features
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python virtual environment
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install pybind11
+
+      - name: Install Dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake ninja-build g++
+
+      - name: Configure CMake
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
+
+      - name: Run C++ tests
+        run: |
+          ./Debug/unit_tests
+
