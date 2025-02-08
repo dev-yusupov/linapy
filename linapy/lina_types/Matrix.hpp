@@ -14,13 +14,13 @@ public:
     Matrix(const std::vector<std::vector<T>>& data);
     size_t rows() const;
     size_t columns() const;
-    T& operator()(size_t row, size_t col);
-    const T& operator()(size_t row, size_t col) const;
+    T& operator()(size_t row, size_t column);
+    const T& operator()(size_t row, size_t column) const;
     void display() const;
-
+    void set(size_t row, size_t column, T value) const;
 private:
-    size_t numRows;
-    size_t numCols;
+    size_t numberOfRows;
+    size_t numberOfColumns;
 };
 
 #include "Matrix.cpp"
