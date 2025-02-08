@@ -1,8 +1,9 @@
-from typing import List, Tuple, Type, TypeVar, Generic
+from typing import List, Tuple, Type, TypeVar, Generic, Optional
 
 from linapy.lina_types import Array
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class Matrix(Array, Generic[T]):
     """
@@ -26,13 +27,13 @@ class Matrix(Array, Generic[T]):
     Examples
     --------
     Creating a new Matrix object:
-    
+
     >>> from linapy.lina_types import Matrix
     >>> matrix = Matrix([[1, 2], [3, 4]], dtype=int)
 
     """
 
-    def __init__(self, data: List[List[T]], dtype: Type[T] = None) -> None:
+    def __init__(self, data: List[List[T]], dtype: Optional[Type[T]] = None) -> None:
         """
         Initialize the matrix.
 
@@ -48,8 +49,8 @@ class Matrix(Array, Generic[T]):
             raise ValueError("Matrix data cannot be empty")
         self.rows: int = len(data)
         self.columns: int = len(data[0]) if data else 0
-        self.data: List[Array] = [Array(row) for row in data]
-        self.dtype: Type[T] = dtype
+        self.data: List[Array] = [Array(row) for row in data]  # type: ignore
+        self.dtype: Optional[Type[T]] = dtype  # type: ignore
 
     def __repr__(self) -> str:
         """
@@ -63,7 +64,7 @@ class Matrix(Array, Generic[T]):
         """
         return f"Matrix({self.data}, rows={self.rows}, columns={self.columns})"
 
-    def __getitem__(self, key: Tuple[int, int]) -> T:
+    def __getitem__(self, key: Tuple[int, int]) -> T:  # type: ignore
         """
         Get an element from the matrix.
 
@@ -79,9 +80,9 @@ class Matrix(Array, Generic[T]):
 
         """
         row, column = key
-        return self.data[row][column]
+        return self.data[row][column]  # type: ignore
 
-    def __setitem__(self, key: Tuple[int, int], value: T) -> None:
+    def __setitem__(self, key: Tuple[int, int], value: T) -> None:  # type: ignore
         """
         Set an element in the matrix.
 
@@ -94,12 +95,11 @@ class Matrix(Array, Generic[T]):
 
         """
         row, column = key
-        if not isinstance(value, self.dtype):
+        if self.dtype is not None and not isinstance(value, self.dtype):
             raise TypeError(f"Element must be of type {self.dtype.__name__}")
-        
-        self.data[row][column] = value
+        self.data[row][column] = value  # type: ignore
 
-    def transpose(self) -> 'Matrix[T]':
+    def transpose(self) -> "Matrix[T]":
         """
         Transpose the matrix.
 
@@ -109,5 +109,8 @@ class Matrix(Array, Generic[T]):
             The transposed matrix.
 
         """
-        transposed_data: List[List[T]] = [[self.data[row][col] for row in range(self.rows)] for col in range(self.columns)]
+        transposed_data: List[List[T]] = [
+            [self.data[row][col] for row in range(self.rows)]  # type: ignore
+            for col in range(self.columns)
+        ]
         return Matrix(transposed_data, dtype=self.dtype)

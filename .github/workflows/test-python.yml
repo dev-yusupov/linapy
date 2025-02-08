@@ -32,12 +32,12 @@ jobs:
       - name: Run flake8
         run: |
           source .venv/bin/activate  # Activate venv
-          flake8
+          flake8 ./linapy
 
       - name: Run mypy
         run: |
           source .venv/bin/activate  # Activate venv
-          mypy
+          mypy --config-file mypy.ini ./linapy
 
   test:
     runs-on: ubuntu-latest

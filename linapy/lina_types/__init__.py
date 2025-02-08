@@ -1,3 +1,3 @@
-from .array import Array
-from .matrix import Matrix
-from .vector import Vector
+from .array import Array  # noqa
+from .matrix import Matrix  # noqa
+from .vector import Vector  # noqa

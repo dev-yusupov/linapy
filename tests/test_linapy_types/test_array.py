@@ -90,7 +90,7 @@ class TestArray:  # Renamed from ArrayTests to TestArray
         result = array1 + array2
 
         assert result == Array([6, 8, 10, 12])
-    
+
     def test_array_addition_with_different_lengths(self):
         """
         Test adding two Array objects with different lengths.
@@ -148,7 +148,7 @@ class TestArray:  # Renamed from ArrayTests to TestArray
         array2 = Array([5, 6, 7, 8])
 
         assert array1 != array2
-        
+
     def test_array_dtype(self):
         """
         Test the dtype of an Array object.

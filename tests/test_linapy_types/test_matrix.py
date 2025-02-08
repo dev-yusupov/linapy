@@ -7,9 +7,11 @@ Unit tests for the Matrix class.
 from linapy.lina_types import Matrix
 import pytest
 
+
 @pytest.fixture
 def matrix():
     return Matrix([[1, 2], [3, 4]], dtype=int)
+
 
 class TestMatrix:
     """
@@ -35,12 +37,14 @@ class TestMatrix:
         """
         with pytest.raises(ValueError, match="Matrix data cannot be empty"):
             Matrix([])
-        
+
     def test_matrix_representation(self, matrix):
         """
         Test the string representation of a Matrix object.
         """
-        assert repr(matrix) == "Matrix([Array([1, 2]), Array([3, 4])], rows=2, columns=2)"
+        assert (
+            repr(matrix) == "Matrix([Array([1, 2]), Array([3, 4])], rows=2, columns=2)"
+        )
 
     def test_matrix_get_element(self, matrix):
         """

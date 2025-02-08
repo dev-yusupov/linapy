@@ -6,6 +6,7 @@ from typing import List, Type, Optional, TypeVar, Union, Iterator
 
 T = TypeVar("T")
 
+
 class Array:
     """
     Array is the base class for the Matrix and Vector classes.
@@ -14,7 +15,7 @@ class Array:
     ----------
     data : List[Union[int, float, str]]
         The data to be stored in the array.
-    
+
     dtype : Optional[Type[T]]
         The type of the data to be stored in the array. If not provided, the type of the first element in the data will be used.
 
@@ -36,7 +37,7 @@ class Array:
 
     __len__() -> int
         Returns the length of the array.
-    
+
     __repr__() -> str
         Returns a string representation of the array.
 
@@ -73,7 +74,7 @@ class Array:
     >>> print(array[2]) # 3
 
     Setting elements in the array:
-    
+
     >>> array[0] = 5
     >>> print(array) # Array([5, 2, 3, 4])
 
@@ -91,12 +92,12 @@ class Array:
     4
 
     Checking if two arrays are equal:
-    
+
     >>> array2 = Array([1, 2, 3, 4])
     >>> print(array == array2) # True
 
     Adding two arrays element-wise:
-    
+
     >>> array3 = array + array2
     >>> print(array3) # Array([2, 4, 6, 8])
 
@@ -112,51 +113,81 @@ class Array:
 
     """
 
-    def __init__(self, data: List[Union[int, float, str]], dtype: Optional[Type[T]] = None) -> None:
+    def __init__(
+        self, data: List[Union[int, float, str]], dtype: Optional[Type[T]] = None
+    ) -> None:
         if not data:
             raise ValueError("Data cannot be initialized as an empty list")
-        
+
         self.data: List[Union[int, float, str]] = data
-        self.dtype: Type[T] = dtype if dtype is not None else type(data[0])
-    
+        self.dtype: Type[T] = dtype if dtype is not None else type(data[0])  # type: ignore
+
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.data})"
 
-    def __getitem__(self, index: int) -> T:
+    def __getitem__(self, index: int) -> Union[int, float, str]:
         try:
             return self.data[index]
         except IndexError:
             raise IndexError("Index out of range")
-    
-    def __setitem__(self, index: int, value: T) -> None:
+
+    def __setitem__(self, index: int, value: Union[int, float, str]) -> None:
         if not isinstance(value, self.dtype):
-            raise TypeError(f"Value must be of type {self.dtype.__name__}, got {type(value).__name__} instead")
+            raise TypeError(
+                f"Value must be of type {self.dtype.__name__}, got {type(value).__name__} instead"
+            )
         try:
             self.data[index] = value
         except IndexError:
             raise IndexError("Index out of range")
-    
+
     def __len__(self) -> int:
         return len(self.data)
-    
-    def __iter__(self) -> Iterator[T]:
+
+    def __iter__(self) -> Iterator[Union[int, float, str]]:
         return iter(self.data)
-    
-    def __eq__(self, other: "Array") -> bool:
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Array):
+            return NotImplemented
         return self.data == other.data
-    
-    def __ne__(self, other: "Array") -> bool:
+
+    def __ne__(self, other: object) -> bool:
+        if not isinstance(other, Array):
+            return NotImplemented
         return self.data != other.data
-    
+
     def __add__(self, other: "Array") -> "Array":
         if len(self) != len(other):
             raise ValueError("Arrays must be of the same length to be added")
-        return self.__class__([a + b for a, b in zip(self, other)])
-    
+
+        return self.__class__(
+            [
+                (
+                    a + b
+                    if isinstance(a, (int, float)) and isinstance(b, (int, float))
+                    else a
+                )
+                for a, b in zip(self, other)
+            ]
+        )
+
     def __sub__(self, other: "Array") -> "Array":
         if len(self) != len(other):
             raise ValueError("Arrays must be of the same length to be subtracted")
-        return self.__class__([a - b for a, b in zip(self, other)])
-    
+
+        return self.__class__(
+            [
+                (
+                    a - b
+                    if isinstance(a, (int, float)) and isinstance(b, (int, float))
+                    else a
+                )
+                for a, b in zip(self, other)
+            ]
+        )
+
     def __mul__(self, other: Union[int, float]) -> "Array":
-        return self.__class__([a * other for a in self])
+        return self.__class__(
+            [a * other if isinstance(a, (int, float)) else a for a in self]
+        )

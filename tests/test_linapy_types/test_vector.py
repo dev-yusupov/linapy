@@ -1,13 +1,15 @@
 from linapy.lina_types import Vector
 import pytest
 
+
 @pytest.fixture
 def vector():
     return Vector([1, 2, 3], dtype=int)
 
+
 class TestVector:
     """
-    
+
     Test cases for the Vector class.
 
     """
@@ -53,5 +55,3 @@ class TestVector:
 
         vector[1] = 6
         assert vector[1] == 6
-
-    

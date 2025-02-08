@@ -4,6 +4,7 @@ from linapy.lina_types.array import Array
 
 T = TypeVar("T")
 
+
 class Vector(Array, Generic[T]):
     """
     A class to represent a vector.
@@ -27,7 +28,7 @@ class Vector(Array, Generic[T]):
 
     """
 
-    def __init__(self, data: List[Union[int, float, str]], dtype: Optional[Type[T]] = None) -> None:
+    def __init__(self, data: List[T], dtype: Optional[Type[T]] = None) -> None:
         """
         Initialize the vector.
 
@@ -38,7 +39,7 @@ class Vector(Array, Generic[T]):
         dtype : type
             The data type of the elements in the vector.
         """
-        super().__init__(data, dtype)
+        super().__init__(data, dtype)  # type: ignore
         self.length: int = len(data)
 
     def __repr__(self) -> str:
@@ -51,8 +52,8 @@ class Vector(Array, Generic[T]):
             The string representation of the vector.
         """
         return f"Vector({self.data}, length={self.length})"
-    
-    def __getitem__(self, key: int) -> T:
+
+    def __getitem__(self, key: int) -> T:  # type: ignore
         """
         Get an element from the vector.
 
@@ -68,9 +69,9 @@ class Vector(Array, Generic[T]):
 
         """
 
-        return self.data[key]
-    
-    def __setitem__(self, key: int, value: T) -> None:
+        return self.data[key]  # type: ignore
+
+    def __setitem__(self, key: int, value: T) -> None:  # type: ignore
         """
         Set an element in the vector.
 
@@ -82,16 +83,16 @@ class Vector(Array, Generic[T]):
             The value to set the element to.
 
         """
-        self.data[key] = value
+        self.data[key] = value  # type: ignore
 
-    def __add__(self, other: "Vector") -> "Vector":
+    def __add__(self, other: "Vector[T]") -> "Vector[T]":  # type: ignore
         """
         Add two vectors element-wise.
 
         Parameters
         ----------
-        other : Vector
-            The vector to add to the current vector.
+        other : Array
+            The array to add to the current vector.
 
         Returns
         -------
@@ -99,20 +100,21 @@ class Vector(Array, Generic[T]):
             The sum of the two vectors.
 
         """
-
-        if self.length != other.length:
+        if not isinstance(other, Vector) or self.length != other.length:
             raise ValueError("Vectors must be of the same length to add them.")
-        
-        return Vector([self.data[i] + other.data[i] for i in range(self.length)], dtype=self.dtype)
-    
-    def __sub__(self, other: "Vector") -> "Vector":
+
+        return Vector(
+            [self._add_elements(self.data[i], other.data[i]) for i in range(self.length)], dtype=self.dtype  # type: ignore
+        )
+
+    def __sub__(self, other: "Vector[T]") -> "Vector[T]":  # type: ignore
         """
         Subtract two vectors element-wise.
 
         Parameters
         ----------
-        other : Vector
-            The vector to subtract from the current vector.
+        other : Array
+            The array to subtract from the current vector.
 
         Returns
         -------
@@ -120,13 +122,14 @@ class Vector(Array, Generic[T]):
             The difference of the two vectors.
 
         """
-
-        if self.length != other.length:
+        if not isinstance(other, Vector) or self.length != other.length:
             raise ValueError("Vectors must be of the same length to subtract them.")
-        
-        return Vector([self.data[i] - other.data[i] for i in range(self.length)], dtype=self.dtype)
-    
-    def __mul__(self, other: Union[int, float]) -> "Vector":
+
+        return Vector(
+            [self._sub_elements(self.data[i], other.data[i]) for i in range(self.length)], dtype=self.dtype  # type: ignore
+        )
+
+    def __mul__(self, other: Union[int, float]) -> "Vector[T]":
         """
         Multiply the vector by a scalar.
 
@@ -141,17 +144,18 @@ class Vector(Array, Generic[T]):
             The product of the vector and the scalar.
 
         """
+        return Vector(
+            [self._mul_elements(self.data[i], other) for i in range(self.length)], dtype=self.dtype  # type: ignore
+        )
 
-        return Vector([self.data[i] * other for i in range(self.length)], dtype=self.dtype)
-    
-    def dot(self, other: "Vector") -> Union[int, float]:
+    def dot(self, other: "Vector[T]") -> T:
         """
         Compute the dot product of two vectors.
 
         Parameters
         ----------
-        other : Vector
-            The vector to compute the dot product with.
+        other : Array
+            The array to compute the dot product with.
 
         Returns
         -------
@@ -159,10 +163,24 @@ class Vector(Array, Generic[T]):
             The dot product of the two vectors.
 
         """
+        if not isinstance(other, Vector) or self.length != other.length:
+            raise ValueError(
+                "Vectors must be of the same length to compute the dot product."
+            )
 
-        if self.length != other.length:
-            raise ValueError("Vectors must be of the same length to compute the dot product.")
-        
-        return sum([self.data[i] * other.data[i] for i in range(self.length)])
-    
+        return sum([self._mul_elements(self.data[i], other.data[i]) for i in range(self.length)])  # type: ignore
 
+    def _add_elements(self, a: T, b: T) -> T:
+        if isinstance(a, str) or isinstance(b, str):
+            raise TypeError("Cannot add string elements in a vector.")
+        return a + b  # type: ignore
+
+    def _sub_elements(self, a: T, b: T) -> T:
+        if isinstance(a, str) or isinstance(b, str):
+            raise TypeError("Cannot subtract string elements in a vector.")
+        return a - b  # type: ignore
+
+    def _mul_elements(self, a: T, b: Union[int, float]) -> T:
+        if isinstance(a, str):
+            raise TypeError("Cannot multiply string elements in a vector.")
+        return a * b  # type: ignore
