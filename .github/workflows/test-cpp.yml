@@ -23,7 +23,10 @@ jobs:
           pip install pybind11
 
       - name: Install Dependencies
-        run: sudo apt-get update && sudo apt-get install -y cmake ninja-build g++
+        run: |
+          sudo apt-get update 
+          sudo apt-get install -y cmake ninja-build g++
+          sudo apt-get install -y pybind11-dev
 
       - name: Configure CMake
         run: |
