@@ -36,7 +36,10 @@ jobs:
           cmake ..
           cmake --build .
 
-      - name: Run tests
+      - name: Run C++ tests
         run: |
-          source ./unit_tests
+          source .venv/bin/activate
+          ls -al tests/build  # List files to confirm the location
+          ./tests/build/unit_tests  # Correct path to the executable
+
           
