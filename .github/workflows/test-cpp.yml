@@ -35,9 +35,11 @@ jobs:
           cd build
           cmake ..
           cmake --build .
-          ls
+          cd bin
+          ls -al
 
       - name: Run tests
         run: |
-          ./unit_tests
+          cd unit_tests
+          ls -al
           
