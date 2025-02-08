@@ -27,6 +27,7 @@ jobs:
 
       - name: Configure CMake
         run: |
+          source .venv/bin/activate
           ls
           cd tests
           mkdir build
