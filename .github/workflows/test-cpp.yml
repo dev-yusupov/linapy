@@ -27,12 +27,6 @@ jobs:
 
       - name: Configure CMake
         run: |
-          python -m venv .venv
-          source .venv/bin/activate
-          pip install pybind11
-
-          ls -al
-
           cd tests
           mkdir build
           cd build
