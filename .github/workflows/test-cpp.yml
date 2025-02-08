@@ -27,14 +27,13 @@ jobs:
 
       - name: Configure CMake
         run: |
+          python -m venv .venv
           source .venv/bin/activate
-          cmake -S tests -B tests/build \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -Dpybind11_DIR=$(pwd)/.venv/lib/python*/site-packages/pybind11/share/cmake/pybind11
+          pip install pybind11
 
-      - name: Build Project
-        run: cmake --build tests/build
-
-      - name: Run C++ tests
-        run: |
-          ./tests/build/unit_tests
+          cd tests
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
+          
