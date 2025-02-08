@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python virtual environment
         run: |
@@ -28,14 +28,13 @@ jobs:
       - name: Configure CMake
         run: |
           source .venv/bin/activate
-          ls
-          cd tests
-          mkdir build
-          cd build
-          cmake ..
-          cmake --build .
+          cmake -S tests -B tests/build \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -Dpybind11_DIR=$(pwd)/.venv/lib/python*/site-packages/pybind11/share/cmake/pybind11
+
+      - name: Build Project
+        run: cmake --build tests/build
 
       - name: Run C++ tests
         run: |
-          ./Debug/unit_tests
-
+          ./tests/build/unit_tests
