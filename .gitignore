@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+.vscode/
+
 # C extensions
 *.so
 
@@ -169,3 +171,19 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+# C++ ignores
+
+*.exe
+*.out
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.obj
+*.o
+build/
+bin/
+external/
