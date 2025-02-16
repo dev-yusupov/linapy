@@ -12,26 +12,26 @@ Utility functions for matrix operations
 #include <stdexcept>
 #include <type_traits>
 
-#include "../lina_types/Matrix.hpp"
+#include "types.hpp"
 
 template <typename T>
-Matrix<T> transpose(const Matrix<T>& matrix);
+types::Matrix<T> transpose(const Matrix<T>& matrix);
 
 template <typename T>
-Matrix<T> add(const Matrix<T>& matrix1, const Matrix<T>& matrix2);
+types::Matrix<T> add(const Matrix<T>& matrix1, const Matrix<T>& matrix2);
 
 template <typename T>
-Matrix<T> subtract(const Matrix<T>& matrix1, const Matrix<T>& matrix2);
+types::Matrix<T> subtract(const Matrix<T>& matrix1, const Matrix<T>& matrix2);
 
 template <typename T>
-Matrix<T> multiply(const Matrix<T>& matrix1, const Matrix<T>& matrix2);
+types::Matrix<T> multiply(const Matrix<T>& matrix1, const Matrix<T>& matrix2);
 
 template <typename T>
-Matrix<T> scalar_multiply(const Matrix<T>& matrix, const T& scalar);
+types::Matrix<T> scalar_multiply(const Matrix<T>& matrix, const T& scalar);
 
 template <typename T>
 Matrix<T> determinant(const Matrix<T>& matrix1, const Matrix<T>& matrix2);
 
-#include "matrix_utils.cpp"
+#include "linapy/utils/matrix_utils.cpp"
 
 #endif

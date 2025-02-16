@@ -1,8 +1,7 @@
-#include "Vector.hpp"
-#include "Array.hpp"
+#include "../include/types.hpp"
 
 template <typename T>
-Vector<T>::Vector(const std::vector<T>& data) {
+types::Vector<T>::Vector(const std::vector<T>& data) {
     if (data.empty()) {
         throw std::invalid_argument("Vector constructor: data is empty");
     }
@@ -12,12 +11,12 @@ Vector<T>::Vector(const std::vector<T>& data) {
 }
 
 template <typename T>
-size_t Vector<T>::size() const {
+size_t types::Vector<T>::size() const {
     return numberOfElements;
 }
 
 template <typename T>
-T& Vector<T>::operator()(size_t index) {
+T& types::Vector<T>::operator()(size_t index) {
     if (index >= numberOfElements) {
         throw std::out_of_range("Vector::operator(): index out of range");
     }
@@ -25,7 +24,7 @@ T& Vector<T>::operator()(size_t index) {
 }
 
 template <typename T>
-const T& Vector<T>::operator()(size_t index) const {
+const T& types::Vector<T>::operator()(size_t index) const {
     if (index >= numberOfElements) {
         throw std::out_of_range("Vector::operator(): index out of range");
     }
@@ -33,7 +32,7 @@ const T& Vector<T>::operator()(size_t index) const {
 }
 
 template <typename T>
-void Vector<T>::display() const {
+void types::Vector<T>::display() const {
     for (const auto& element : this->getData()) {
         std::cout << element << std::endl;
     }

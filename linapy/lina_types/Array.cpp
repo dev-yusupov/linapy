@@ -1,12 +1,12 @@
-#include "Array.hpp"
+#include "../include/types.hpp"
 
 template <typename T>
-Array<T>::Array() {
+types::Array<T>::Array() {
     // Default constructor
 }
 
 template <typename T>
-Array<T>::Array(const std::vector<T>& data) : data(data) {
+types::Array<T>::Array(const std::vector<T>& data) : data(data) {
     /*
     Constructor that initializes the array with the given data.
 
@@ -22,7 +22,7 @@ Array<T>::Array(const std::vector<T>& data) : data(data) {
 }
 
 template <typename T>
-size_t Array<T>::size() const {
+size_t types::Array<T>::size() const {
     /*
     Returns the number of elements in the array.
     */
@@ -30,7 +30,7 @@ size_t Array<T>::size() const {
 }
 
 template <typename T>
-T& Array<T>::operator[](size_t index) {
+T& types::Array<T>::operator[](size_t index) {
     /**
      * Returns a reference to the element at the given index.
      * 
@@ -45,7 +45,7 @@ T& Array<T>::operator[](size_t index) {
 }
 
 template <typename T>
-const T& Array<T>::operator[](size_t index) const {
+const T& types::Array<T>::operator[](size_t index) const {
     /**
      * Returns a const reference to the element at the given index.
      * 
@@ -61,7 +61,7 @@ const T& Array<T>::operator[](size_t index) const {
 }
 
 template <typename T>
-void Array<T>::set(size_t index, const T& value) {
+void types::Array<T>::set(size_t index, const T& value) {
     /**
      * Sets the value of the element at the given index.
      * 
@@ -77,7 +77,7 @@ void Array<T>::set(size_t index, const T& value) {
 }
 
 template <typename T>
-void Array<T>::display() const {
+void types::Array<T>::display() const {
     /**
      * Prints the elements of the array to the standard output.
      * 
@@ -90,11 +90,11 @@ void Array<T>::display() const {
 }
 
 template <typename T>
-std::vector<T>& Array<T>::getData() {
+std::vector<T>& types::Array<T>::getData() {
     return data;
 }
 
 template <typename T>
-const std::vector<T>& Array<T>::getData() const {
+const std::vector<T>& types::Array<T>::getData() const {
     return data;
 }

@@ -9,7 +9,7 @@ Implementation of matrix_utils.h
 #include <stdexcept>
 #include <type_traits>
 
-#include "../lina_types/Matrix.hpp"
+#include "types.hpp"
 #include "matrix_utils.hpp"
 
 /**
@@ -19,8 +19,9 @@ Implementation of matrix_utils.h
  * @param matrix The matrix to transpose.
  * @return Matrix<T> The transposed matrix.
  */
+
 template <typename T>
-Matrix<T> transpose(const Matrix<T>& matrix) {
+types::Matrix<T> transpose(const types::Matrix<T>& matrix) {
     size_t rows = matrix.rows();
     size_t columns = matrix.columns();
 
@@ -45,7 +46,7 @@ Matrix<T> transpose(const Matrix<T>& matrix) {
  * @throws std::invalid_argument if the matrices have different dimensions.
  */
 template <typename T>
-Matrix<T> add(const Matrix<T>& matrix1, const Matrix<T>& matrix2) {
+types::Matrix<T> add(const types::Matrix<T>& matrix1, const types::Matrix<T>& matrix2) {
     static_assert(std::is_arithmetic<T>::value, "Matrix elements must be of a numerical type.");
 
     if (matrix1.rows() != matrix2.rows() || matrix1.columns() != matrix2.columns()) {
@@ -77,7 +78,7 @@ Matrix<T> add(const Matrix<T>& matrix1, const Matrix<T>& matrix2) {
  */
 
 template <typename T>
-Matrix<T> subtract(const Matrix<T>& matrix1, const Matrix<T>& matrix2) {
+types::Matrix<T> subtract(const types::Matrix<T>& matrix1, const types::Matrix<T>& matrix2) {
     static_assert(std::is_arithmetic<T>::value, "Matrix elements must be of a numerical type.");
 
     if (matrix1.rows() != matrix2.rows() || matrix1.columns() != matrix2.columns()) {
@@ -112,7 +113,7 @@ Matrix<T> subtract(const Matrix<T>& matrix1, const Matrix<T>& matrix2) {
 #define BLOCK_SIZE 32
 
 template <typename T>
-Matrix<T> multiply(const Matrix<T>& matrix1, const Matrix<T>& matrix2) {
+types::Matrix<T> multiply(const types::Matrix<T>& matrix1, const types::Matrix<T>& matrix2) {
     static_assert(std::is_arithmetic<T>::value, "Matrix elements must be of a numerical type.");
 
     if (matrix1.columns() != matrix2.rows()) {
@@ -152,7 +153,7 @@ Matrix<T> multiply(const Matrix<T>& matrix1, const Matrix<T>& matrix2) {
  */
 
 template <typename T>
-Matrix<T> scalar_multiply(const Matrix<T>& matrix, const T& scalar) {
+types::Matrix<T> scalar_multiply(const types::Matrix<T>& matrix, const T& scalar) {
     static_assert(std::is_arithmetic<T>::value, "Matrix elements must be of a numerical type.");
 
     size_t rows = matrix.rows();
@@ -180,7 +181,7 @@ Matrix<T> scalar_multiply(const Matrix<T>& matrix, const T& scalar) {
  */
 
 template <typename T>
-Matrix<T> determinant(const Matrix<T>& matrix1, const Matrix<T>& matrix2) {
+types::Matrix<T> determinant(const types::Matrix<T>& matrix1, const types::Matrix<T>& matrix2) {
     static_assert(std::is_arithmetic<T>::value, "Matrix elements must be of a numerical type.");
 
     if (matrix1.rows() != 2 || matrix1.columns() != 2) {

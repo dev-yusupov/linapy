@@ -1,7 +1,7 @@
-#include "Matrix.hpp"
+#include "../include/types.hpp"
 
 template <typename T>
-Matrix<T>::Matrix(const std::vector<std::vector<T>>& data) {
+types::Matrix<T>::Matrix(const std::vector<std::vector<T>>& data) {
     if (data.empty() || data[0].empty()) {
         throw std::invalid_argument("Matrix constructor: data is empty or improperly formatted");
     }
@@ -18,17 +18,17 @@ Matrix<T>::Matrix(const std::vector<std::vector<T>>& data) {
 }
 
 template <typename T>
-size_t Matrix<T>::rows() const {
+size_t types::Matrix<T>::rows() const {
     return numberOfRows;
 }
 
 template <typename T>
-size_t Matrix<T>::columns() const {
+size_t types::Matrix<T>::columns() const {
     return numberOfColumns;
 }
 
 template <typename T>
-T& Matrix<T>::operator()(size_t row, size_t column) {
+T& types::Matrix<T>::operator()(size_t row, size_t column) {
     if (row >= numberOfRows || column >= numberOfColumns) {
         throw std::out_of_range("Matrix::operator(): index out of range");
     }
@@ -36,7 +36,7 @@ T& Matrix<T>::operator()(size_t row, size_t column) {
 }
 
 template <typename T>
-const T& Matrix<T>::operator()(size_t row, size_t column) const {
+const T& types::Matrix<T>::operator()(size_t row, size_t column) const {
     if (row >= numberOfRows || column >= numberOfColumns) {
         throw std::out_of_range("Matrix::operator(): index out of range");
     }
@@ -44,14 +44,14 @@ const T& Matrix<T>::operator()(size_t row, size_t column) const {
 }
 
 template <typename T>
-void Matrix<T>::display() const {
+void types::Matrix<T>::display() const {
     for (const auto& row : this->getData()) {
         row.display();
     }
 }
 
 template <typename T>
-void Matrix<T>::set(size_t row, size_t column, T value) const {
+void types::Matrix<T>::set(size_t row, size_t column, T value) const {
     if (row >= numberOfRows || column >= numberOfColumns) {
         throw std::out_of_range("Matrix::set(): index out of range");
     }
