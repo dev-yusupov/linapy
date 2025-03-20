@@ -1,0 +1,12 @@
+site_name: LinaPy Research
+site_description: LinaPy Research Documentation Site
+site_author: Bobur Yusupov
+site_url: https://dev-yusupov.github.io/linapy-research/
+
+
+theme:
+  name: mkdocs
+  shortcuts:
+    next: 78 # n
+    previous: 80 # p
+    search: 83 # s
